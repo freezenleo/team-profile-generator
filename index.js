@@ -3,23 +3,24 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generatePage = require('./src/page-template');
 
+//ask for basic info
 const promptUser = () => {
+
     return inquirer.prompt([
         {
             type: 'input',
             name: 'name',
-            message: 'What is your name? (Required)',
+            message: 'What is the name of team manager? (Required)',
             validate: nameInput => {
                 if (nameInput) {
                     return true;
                 }
                 else {
-                    console.log('Please enter your name!');
+                    console.log('Please enter manager name!');
                     return false;
                 }
             }
         },
-
         {
             type: 'input',
             name: 'id',
@@ -49,38 +50,6 @@ const promptUser = () => {
             }
         },
         {
-            type: 'list',
-            name: 'role',
-            message: 'What is your role?',
-            choices: ['Manager', 'Engineer', 'Intern']
-        },
-        {
-            type: 'confirm',
-            name: 'confirmAddEmployee',
-            message: 'Would you like to enter another employee?',
-            default: false
-        }
-    ])
-
-        .then(promptData => {
-            profileData.profile.push(promptData);
-            if (promptData.role === 'Manager') {
-                return promptManager();
-            }
-            else if (promptData.role === 'Engineer') {
-                return promptEngineer();
-            }
-            else {
-                return promptIntern();
-            }
-        })
-
-
-}
-
-const promptManager = () => {
-    return inquirer.prompt([
-        {
             type: 'input',
             name: 'officeNumber',
             message: 'What is your office number? (Required)',
@@ -93,10 +62,66 @@ const promptManager = () => {
                     return false;
                 }
             }
-        },
+        }
     ])
+    //identify employee role
+    // .then(promptData => {
+    //     profileData.employee.push(promptData);
+    //     if (promptData.role === 'Manager') {
+    //         return promptManager();
+    //     }
+    //     else if (promptData.role === 'Engineer') {
+    //         return promptEngineer();
+    //     }
+    //     else if (promptData.role === 'Intern') {
+    //         return promptIntern();
+    //     }
+    //     else {
+    //         return profileData;
+    //     }
+    // })
+
+    // .then()
+
+
 }
 
+//as manager role question
+const promptRole = profileData => {
+    if (!profileData.employee) {
+        profileData.employee = [];
+    }
+
+    console.log(`
+    =================
+    Add New Employee
+    =================
+    `);
+
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'role',
+            message: 'What do you want to add?',
+            choices: ['Engineer', 'Intern', 'Finish building my team']
+        },
+    ])
+        .then(employeeData => {
+            profileData.employee.push(employeeData);
+            if (employeeData.role === 'Engineer') {
+                return promptEngineer();
+
+            }
+            else if (promptData.role === 'Intern') {
+                return promptIntern();
+            }
+            else {
+                return profileData;
+            }
+        })
+}
+
+//as engineer role question
 const promptEngineer = () => {
     return inquirer.prompt([
         {
@@ -116,6 +141,7 @@ const promptEngineer = () => {
     ])
 }
 
+//as intern role question
 const promptIntern = () => {
     return inquirer.prompt([
         {
@@ -135,25 +161,22 @@ const promptIntern = () => {
     ])
 }
 
-const addEmployee = () => {
-    return inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'confirmAddEmployee',
-            message: 'Would you like to enter another employee?',
-            default: false
-        }
-    ])
-        .then(userData => {
-            profileData.profile.push(userData);
-            if (userData.confirmAddEmployee) {
-                return promptUser(profileData);
-            }
-            else {
-                return profileData;
-            }
-        })
-}
+.then(employeeData => {
+    profileData.employee.push(employeeData);
+    if (employeeData.role === 'Engineer') {
+        return promptEngineer();
+    }
+    else if (promptData.role === 'Intern') {
+        return promptIntern();
+    }
+    else {
+        return profileData;
+    }
+})
 
 promptUser()
     .then()
+    .then(profileData => {
+        return generatePage(profileData);
+    })
+    .then(writefile)
