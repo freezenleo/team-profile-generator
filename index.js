@@ -64,29 +64,9 @@ const promptUser = () => {
             }
         }
     ])
-    //identify employee role
-    // .then(promptData => {
-    //     profileData.employee.push(promptData);
-    //     if (promptData.role === 'Manager') {
-    //         return promptManager();
-    //     }
-    //     else if (promptData.role === 'Engineer') {
-    //         return promptEngineer();
-    //     }
-    //     else if (promptData.role === 'Intern') {
-    //         return promptIntern();
-    //     }
-    //     else {
-    //         return profileData;
-    //     }
-    // })
-
-    // .then()
-
-
 }
 
-//as manager role question
+//ask for role question option
 const promptRole = profileData => {
     if (!profileData.employee) {
         profileData.employee = [];
@@ -112,7 +92,7 @@ const promptRole = profileData => {
                 return promptEngineer();
 
             }
-            else if (promptData.role === 'Intern') {
+            else if (employeeData.role === 'Intern') {
                 return promptIntern();
             }
             else {
@@ -126,8 +106,50 @@ const promptEngineer = () => {
     return inquirer.prompt([
         {
             type: 'input',
+            name: 'name',
+            message: 'What is the name of engineer? (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                }
+                else {
+                    console.log('Please enter engineer name!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is the engineer id number? (Required)',
+            validate: idInput => {
+                if (idInput) {
+                    return true;
+                }
+                else {
+                    console.log('Please enter your id number!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'eamil',
+            message: 'What is engineer email? (Required)',
+            validate: emailInput => {
+                if (emailInput) {
+                    return true;
+                }
+                else {
+                    console.log('Please enter your email!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
             name: 'username',
-            message: 'What is your GitHub username? (Required)',
+            message: 'What is engineer GitHub username? (Required)',
             validate: usernameInput => {
                 if (usernameInput) {
                     return true;
@@ -139,6 +161,7 @@ const promptEngineer = () => {
             }
         },
     ])
+        .then(promptRole);
 }
 
 //as intern role question
@@ -146,8 +169,50 @@ const promptIntern = () => {
     return inquirer.prompt([
         {
             type: 'input',
+            name: 'name',
+            message: 'What is the name of intern? (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                }
+                else {
+                    console.log('Please enter intern name!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is the intern id number? (Required)',
+            validate: idInput => {
+                if (idInput) {
+                    return true;
+                }
+                else {
+                    console.log('Please enter your id number!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'eamil',
+            message: 'What is the intern email? (Required)',
+            validate: emailInput => {
+                if (emailInput) {
+                    return true;
+                }
+                else {
+                    console.log('Please enter your email!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
             name: 'school',
-            message: 'What is your school? (Required)',
+            message: 'What is the intern school? (Required)',
             validate: schoolInput => {
                 if (schoolInput) {
                     return true;
@@ -159,24 +224,14 @@ const promptIntern = () => {
             }
         },
     ])
+        .then(promptRole);
 }
 
-.then(employeeData => {
-    profileData.employee.push(employeeData);
-    if (employeeData.role === 'Engineer') {
-        return promptEngineer();
-    }
-    else if (promptData.role === 'Intern') {
-        return promptIntern();
-    }
-    else {
-        return profileData;
-    }
-})
+
 
 promptUser()
-    .then()
+    .then(promptRole)
     .then(profileData => {
         return generatePage(profileData);
     })
-    .then(writefile)
+    // .then(writefile)
