@@ -5,5 +5,5 @@ Team profile generator is used to generate team members within your team for you
 Here is a walkthrough video of the applicaiton:
 https://drive.google.com/file/d/131hyOv-sfZlpczk9GQxm6mpeYtF_uu7K/view
 
-A index.html file will be created within dist folder once finished. Here is an example of the HTML file created:
+An index.html file will be created within dist folder once finished. Here is an example of the HTML file created:
 
