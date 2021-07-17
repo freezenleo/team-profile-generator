@@ -1,8 +1,8 @@
 //create card section
 const generateCard = teamArr => {
-    console.log('profileData', profileData);
+
     console.log('teamArr', teamArr);
-    console.log('role', role);
+
     return `
     
         ${teamArr
@@ -106,4 +106,4 @@ const generatePage = teamArr => {
     `;
 }
 
-module.exports = generatePage;
+module.exports = { generatePage };

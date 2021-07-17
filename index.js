@@ -19,7 +19,7 @@ const writeFile = fileContent => {
     });
 };
 
-const generatePage = require('./src/page-template.js');
+const { generatePage } = require('./src/page-template.js');
 
 const profileData = [];
 
