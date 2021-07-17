@@ -11,10 +11,9 @@ const writeFile = fileContent => {
                 reject(err);
                 return;
             }
-            resolve({
-                ok: true,
-                message: 'File created!'
-            });
+            resolve(
+                console.log('page created')
+            );
         });
     });
 };
@@ -25,6 +24,11 @@ const profileData = [];
 
 //ask for basic info
 const promptUser = () => {
+    console.log(`
+    ===============
+    Add a New Employee
+    ===============
+    `);
 
     return inquirer.prompt([
         {
@@ -57,7 +61,7 @@ const promptUser = () => {
         },
         {
             type: 'input',
-            name: 'eamil',
+            name: 'email',
             message: 'What is your email? (Required)',
             validate: emailInput => {
                 if (emailInput) {
@@ -79,7 +83,7 @@ const promptUser = () => {
         .then(function ({ name, id, email, role }) {
             let roleSection = '';
             if (role === 'Manager') {
-                roleSection = 'officeName';
+                roleSection = 'officeNumber';
             }
             else if (role === 'Engineer') {
                 roleSection = 'username';
@@ -105,17 +109,18 @@ const promptUser = () => {
             ])
                 .then(function ({ roleSection, addMembers }) {
                     let newMember = '';
-                    if (roleSection === 'Manager') {
-                        newMember = new Manager(name, id, email, role, roleSection);
+                    if (role === 'Manager') {
+                        newMember = new Manager(name, id, email, roleSection);
                     }
-                    else if (roleSection === 'Engineer') {
-                        newMember = new Engineer(name, id, email, role, roleSection);
+                    else if (role === 'Engineer') {
+                        newMember = new Engineer(name, id, email, roleSection);
                     }
-                    else if (roleSection === 'Engineer') {
-                        newMember = new Intern(name, id, email, role, roleSection)
+                    else if (role === 'Intern') {
+                        newMember = new Intern(name, id, email, roleSection)
                     }
+
                     profileData.push(newMember)
-                    // .then(profileData => {
+
                     if (addMembers === "Yes") {
                         promptUser(profileData);
                     }
@@ -123,7 +128,7 @@ const promptUser = () => {
                         fileContent = generatePage(profileData);
                         writeFile(fileContent);
                     }
-                    // })
+
                 })
 
         })
@@ -131,82 +136,3 @@ const promptUser = () => {
 
 
 promptUser();
-    // .then(profileData => {
-    //     const pageHTML = generatePage(profileData);
-
-    //     fs.writeFile('./dist/index.html', pageHTML, err => {
-    //         if (err) throw new Error(err);
-    //         console.log('Page created in dist folder!')
-    //     })
-
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
-
-
-    // as engineer role question
-// const promptManager = () => {
-//     return inquirer.prompt([
-//         {
-//             type: 'input',
-//             name: 'officeNumber',
-//             message: 'What is your office number? (Required)',
-//             validate: officeNumberInput => {
-//                 if (officeNumberInput) {
-//                     return true;
-//                 }
-//                 else {
-//                     console.log('Please enter your office number!');
-//                     return false;
-//                 }
-//             }
-//         },
-
-
-//     ])
-
-// }
-
-
-// //as engineer role question
-// const promptEngineer = () => {
-//     return inquirer.prompt([
-//         {
-//             type: 'input',
-//             name: 'username',
-//             message: 'What is engineer GitHub username? (Required)',
-//             validate: usernameInput => {
-//                 if (usernameInput) {
-//                     return true;
-//                 }
-//                 else {
-//                     console.log('Please enter your GitHub username!');
-//                     return false;
-//                 }
-//             }
-//         },
-//     ])
-
-// }
-
-// //as intern role question
-// const promptIntern = () => {
-//     return inquirer.prompt([
-//         {
-//             type: 'input',
-//             name: 'school',
-//             message: 'What is the intern school? (Required)',
-//             validate: schoolInput => {
-//                 if (schoolInput) {
-//                     return true;
-//                 }
-//                 else {
-//                     console.log('Please enter your school!');
-//                     return false;
-//                 }
-//             }
-//         },
-//     ])
-
-// }
