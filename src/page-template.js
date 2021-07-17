@@ -1,31 +1,33 @@
-//create engineer section
+//create card section
 const generateCard = teamArr => {
-
+    console.log('profileData', profileData);
+    console.log('teamArr', teamArr);
+    console.log('role', role);
     return `
-    <div class="card mx-auto mb-3" style="width: 18rem;">
+    
         ${teamArr
-            .filter(({ role }) => 'Engineer')
+            .filter(({ role }) => role === 'Engineer')
             .map(({ name, id, email, role, roleSection }) => {
-                return `  
+                return `             
             <div class="card mx-auto mb-3" style="width: 18rem;">
-            <h5 class="card-header">${name}</br>${role}</h5>            
-            <ul class="list-group list-groupflush">
-                <li class="list-group-item">ID: ${id}</li>
-                <li class="list-group-item">
-                    <a href="mailto:${email}">Email: ${email}</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="https://github.com/${roleSection}">GitHub: ${roleSection}</a>
-                </li>
+                <h5 class="card-header">${name}</br>${role}</h5>            
+                <ul class="list-group list-groupflush">
+                    <li class="list-group-item">ID: ${id}</li>
+                    <li class="list-group-item">
+                        <a href="mailto:${email}">Email: ${email}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="https://github.com/${roleSection}">GitHub: ${roleSection}</a>
+                    </li>
             </div>
-        </div>
-    </div>
+             
     `;
             })
             .join('')
         }
+
         ${teamArr
-            .filter(({ role }) => 'Intern')
+            .filter(({ role }) => role === 'Intern')
             .map(({ name, id, email, role, roleSection }) => {
                 return `  
             <div class="card mx-auto mb-3" style="width: 18rem;">
@@ -38,16 +40,14 @@ const generateCard = teamArr => {
                 <li class="list-group-item">
                    School: ${roleSection}
                 </li>
-            </div>
-        </div>
-    </div>
+            </div>       
     `;
             })
             .join('')
         }
 
     ${teamArr
-            .filter(({ role }) => 'Engineer')
+            .filter(({ role }) => role === 'Engineer')
             .map(({ name, id, email, role, roleSection }) => {
                 return `  
             <div class="card mx-auto mb-3" style="width: 18rem;">
@@ -60,9 +60,7 @@ const generateCard = teamArr => {
                 <li class="list-group-item">
                     Office: ${roleSection}
                 </li>
-            </div>
-        </div>
-    </div>
+            </div>        
     `;
             })
             .join('')
@@ -72,7 +70,9 @@ const generateCard = teamArr => {
 }
 
 
-const generatePage = profileArr => {
+const generatePage = teamArr => {
+    console.log('Arr', teamArr)
+
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -96,8 +96,8 @@ const generatePage = profileArr => {
 
         <main class="container">
             <div class="row>
-                <div class="col-6>
-                ${generateCard(employee)}
+                <div class="col-6">
+                ${generateCard(teamArr)}
                 </div>
             </div>           
         </main>

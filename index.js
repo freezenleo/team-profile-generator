@@ -4,6 +4,21 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
+const writeFile = fileContent => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('./dist/index.html', fileContent, err => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve({
+                ok: true,
+                message: 'File created!'
+            });
+        });
+    });
+};
+
 const generatePage = require('./src/page-template.js');
 
 const profileData = [];
@@ -105,7 +120,8 @@ const promptUser = () => {
                         promptUser(profileData);
                     }
                     else {
-                        return profileData;
+                        fileContent = generatePage(profileData);
+                        writeFile(fileContent);
                     }
                     // })
                 })
@@ -114,16 +130,16 @@ const promptUser = () => {
 }
 
 
-promptUser()
-    .then(profileData => {
-        const pageHTML = generatePage(profileData);
+promptUser();
+    // .then(profileData => {
+    //     const pageHTML = generatePage(profileData);
 
-        fs.writeFile('./dist/index.html', pageHTML, err => {
-            if (err) throw new Error(err);
-            console.log('Page created in dist folder!')
-        })
+    //     fs.writeFile('./dist/index.html', pageHTML, err => {
+    //         if (err) throw new Error(err);
+    //         console.log('Page created in dist folder!')
+    //     })
 
-    })
+    // })
     // .catch(err => {
     //     console.log(err);
     // });
