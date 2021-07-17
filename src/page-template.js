@@ -1,5 +1,5 @@
 //create engineer section
-const generateEngineer = teamArr => {
+const generateCard = teamArr => {
 
     return `
     <div class="card mx-auto mb-3" style="width: 18rem;">
@@ -71,16 +71,6 @@ const generateEngineer = teamArr => {
     `
 }
 
-// create intern section 
-const generateIntern = internSection => {
-    if (!internSection) {
-        return ``;
-    }
-
-    return `
-    <
-    `
-}
 
 const generatePage = profileArr => {
     return `
@@ -107,6 +97,7 @@ const generatePage = profileArr => {
         <main class="container">
             <div class="row>
                 <div class="col-6>
+                ${generateCard(employee)}
                 </div>
             </div>           
         </main>
